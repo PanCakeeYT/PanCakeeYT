@@ -1,33 +1,108 @@
-# 👋 Hey, I'm Brodie  
-### 💻 Just • For • Fun 
+# Abdelrahman (PanCakeeYT)
 
-![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=00F7FF&width=435&lines=15+y%2Fo+machine;Thinker+%7C+Builder+%7C+Grinder;Making+projects+that+actually+slap)
-
----
-
-🧠 **Currently working on:** 1:10 Scale RC Car (Both chassis and firmware)
-⚙️ **Main Stack:** Python • ESP32 • C++ • React • Firebase  
-📍 **Location:** Giza, Egypt  
-📫 **Reach me:** [diamondmachine2022@gmail.com](mailto:diamondmachine2022@gmail.com)
+> Precision over hype
 
 ---
 
-### ⚔️ Tech Stack
-![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
-![C++](https://img.shields.io/badge/C++-00599C?logo=cplusplus&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
-![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
-![ESP32](https://img.shields.io/badge/ESP32-black?logo=espressif&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=black)
+## Overview
+Hands-on with embedded firmware, control systems, and real-time audio for small-scale vehicles. Single-file, dense, no fluff — everything important first.
 
 ---
 
-### 🎧 Vibes While Coding
-![Night Coding](https://64.media.tumblr.com/9fdbb0400c84d7cb2a74893e937ce4a1/tumblr_nqu5vxuTXl1r2h6ioo1_500.gif)
-
+## Current Focus
+- 1:10 Scale RC Car — custom chassis, drivetrain tuning, and firmware stack  
+- Real-time stabilization using MPU6050 on ESP32 (interrupt-driven, low-latency)  
+- Multi-ESP architecture: TX / RX / EES (Engine Exhaust Sound) via ESP-NOW  
+- ESP32-based engine audio: pitch / load mapping, amp control, and PWM sync  
+- Robust failsafe and modular subsystem design for easy debugging  
 
 ---
 
-### 📊 GitHub Stats
-![My GitHub stats](https://github-readme-stats.vercel.app/api?username=amBrodie&show_icons=true&theme=tokyonight)
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=amBrodie&layout=compact&theme=tokyonight)
+## Key Projects
+- **RC Car Firmware** — TX/RX comms, servo/motor control, lighting, failsafe  
+- **EES (Engine Sound System)** — real-time sound mapping + amp driver (TDA2030A)  
+- *rest are private*
+
+---
+
+## Tech Stack
+**Firmware / Embedded:** ESP32 • Arduino • C++ • FreeRTOS • I2C • SPI • UART • PWM • LEDC  
+**Backend / Tools:** Python • Flask • FastAPI • Firebase • REST • WebSocket • GitHub Actions  
+**Frontend / UI:** React • HTML • CSS • JS (ES6) • TFT_eSPI (ESP32)  
+**Audio / Media:** TDA2030A • PCM / WAV playback • real-time pitch shift • sample streaming  
+**Hardware / Tools:** MPU6050 • L298N • Servos • Voltmeter dividers • Oscilloscope (when needed)  
+**Design / Workflow:** VS Code • Git • Docker (local testing) • Figma • Illustrator • Photoshop  
+
+---
+
+## Hardware Inventory
+- ESP32 (x3) — TX, RX, EES  
+- MPU6050 (gyro/accel)  
+- L298N motor driver (brushed)  
+- TDA2030A amplifier + speaker  
+- 9–12V battery packs, voltage dividers, MOSFET switching  
+- Joystick, TFT display, push buttons, rotary pots  
+- Air humidifier module for visual exhaust effect  
+
+---
+
+## Architecture Snapshot
+[TX ESP32] <--ESP-NOW--> [RX ESP32] ---> hardware: motor driver, servos, lights
+
+`--> [EES ESP32] --> amplifier + speaker
+TFT (TX) -- UI/Control Joystick -> TX
+
+yaml
+Copy code
+
+---
+
+## Features & Capabilities
+- Dual-stage lighting with staged button logic (press1 → stage1, press2 → stage2+stage1, press3 → off)  
+- Gyro-based steering correction with sub-5ms response target  
+- Engine sound mapped to RPM + throttle, with gear-shift emulation  
+- Modular firmware: OTA-friendly, subsystem separation, clear IPC channels  
+- Connection failsafe, battery voltage monitoring, logging via serial + WebSocket  
+- High-speed I2C (400kHz+) and prioritized hardware timers for control loops  
+
+---
+
+## Workflow & Dev Notes
+- Use hardware timers for control loops; avoid blocking `delay()` in main loops  
+- I2C: keep transactions small, use DMP when possible for MPU6050 to reduce jitter  
+- Use `ledcWrite()` for servo-like PWM on ESP32 for stable timing under load  
+- Separate power domains for motors and logic — noise kills sensors and ADC readings  
+- If you see jitter: check wiring, ground plane, and decoupling caps first — then code  
+
+---
+
+## Active Repo Status
+| Repo | Role | State |
+|:----|:----:|:----:|
+| rc-firmware | TX/RX/EES firmware | In development |
+| ees-audio | Sound engine + samples | Prototype |
+| easysetup | Admin-free installer scripts | Functional |
+| fileflow-client | Background file sync | Alpha |
+| localhost-v2 | Local scanner & tools | Stable |
+
+---
+# build & flash RX firmware
+make rx-build && esptool.py --port /dev/ttyUSB0 write_flash 0x10000 build/rx.bin
+
+# tail serial (windows)
+python -m serial.tools.miniterm COM4 115200
+
+# run local telemetry dashboard (dev)
+cd dashboard && python -m flask run --host=0.0.0.0
+Metrics
+
+
+Contact
+Name: Abdelrahman
+GitHub: github.com/PanCakeeYT
+Email: diamondmachine2022@gmail.com
+
+Philosophy
+Modular systems. Predictable behavior.
+If its fragile, iterate until its solid
+No hype, just reliable builds
